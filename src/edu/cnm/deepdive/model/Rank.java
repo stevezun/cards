@@ -1,5 +1,10 @@
 package edu.cnm.deepdive.model;
-
+/**
+ * Encapsulates all of the rank values used in standard playing cards. This
+ * {@code enum} also defines a {@link #symbol()} method that returns the 1-
+ * or 2-character shorthand abbreviation used in card play notation for each
+ * of its enumerated values.
+ */
 public enum Rank {
   ACE,
   TWO,
@@ -14,7 +19,9 @@ public enum Rank {
   JACK,
   QUEEN,
   KING;
-
+  /**
+   * {@link final} Assigns all of the {@code enum} ranks to a string.
+   */
   private static final String[] symbols = {
       "A",
       "2",
