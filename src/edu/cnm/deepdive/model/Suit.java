@@ -4,8 +4,6 @@ package edu.cnm.deepdive.model;
  * Encapsulates the suits of standard playing cards. The enum includes {@link #symbol()} and {@link #symbol()} methods, to
  * return the immutable Unicode symbol and {@link Color} enum instance of any suit.
  */
-
-
 public enum Suit {
   CLUBS, DIAMONDS, HEARTS, SPADES;
 

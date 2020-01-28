@@ -8,6 +8,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Class Trick encapsulates the card trick program
+ */
 public class Trick {
 
   private Deck deck;
@@ -15,6 +18,10 @@ public class Trick {
   private List<Card> blackPile;
   private Random rng = new SecureRandom();
 
+  /**
+   * Main method initializes the card trick program with
+   * {@param args} defining the actions.
+   */
   public static void main(String[] args) {
     Trick trick = new Trick();
     trick.prepare();
@@ -23,11 +30,17 @@ public class Trick {
     trick.report();
   }
 
+  /**
+   * Method creates new deck.
+   */
   private void prepare() {
     deck = new Deck();
     deck.shuffle( rng );
   }
 
+  /**
+   * Decks are split in accordance with color
+   */
   private void split() {
     redPile = new LinkedList<>();
     blackPile = new LinkedList<>();
@@ -41,6 +54,9 @@ public class Trick {
     }
   }
 
+  /**
+   * The decks are swapped for the shuffle.
+   */
   private void swap() {
     int swapSize = rng.nextInt( 1 + Math.min( blackPile.size(), redPile.size() ) );
     for (int i = 0; i < swapSize; i++) {
@@ -48,6 +64,10 @@ public class Trick {
       blackPile.add( redPile.remove( 0 ) );
     }
   }
+
+  /**
+   * The cards are counted by the report method.
+   */
   private void report() {
     int redCount = 0;
     int blackCount = 0;
