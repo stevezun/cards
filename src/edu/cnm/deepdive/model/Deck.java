@@ -1,6 +1,20 @@
+/*
+ *  Copyright 2019 Deep Dive Coding/CNM Ingenuity
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package edu.cnm.deepdive.model;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,15 +23,18 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * The class encapsulates the deck method.
+ * Encapsulates a single deck of standard playing cards, which can be shuffled, dealt one card at a
+ * time, and reshuffled (automatically gathering all previously dealt cards back into the deck).
+ *
+ * @author Nicholas Bennett &amp; Deep Dive Coding Java + Android Cohort 9.
  */
-public class Deck {
+public class Deck implements Comparator<Card> {
 
   private List<Card> cards;
   private List<Card> dealt;
 
   /**
-   * The methods define cards and dealt with a list function and assigns a value of s and r.
+   * Initializes this instance with 52 cards, sorted by suit and rank.
    */
   public Deck() {
     cards = new ArrayList<>();
@@ -30,8 +47,10 @@ public class Deck {
   }
 
   /**
-   * Returns card instance value that shows that the cards have been dealt.
-   * @return
+   * Removes and returns a single {@link Card} from the deck. If there are no more cards to be
+   * dealt, a {@code null} value is returned.
+   *
+   * @return top {@link Card} instance on deck.
    */
   public Card deal() {
     Card card = cards.isEmpty() ? null : cards.remove(0);
@@ -42,8 +61,10 @@ public class Deck {
   }
 
   /**
-   * Initializes the shuffle method using a rng.
-   * @param rng
+   * Shuffles the deck contents (after returning any previously dealt cards to the deck) using the
+   * specified source of randomness.
+   *
+   * @param rng {@link Random} instance, used as source of randomness for shuffle.
    */
   public void shuffle(Random rng) {
     gather();
@@ -56,16 +77,15 @@ public class Deck {
   }
 
   /**
-   * Gives a return value that counts the remaining cards left in the deck.
-   * @return
+   * Returns the number of {@link Card} instances remaining to be dealt.
    */
   public int remaining() {
     return cards.size();
   }
 
   /**
-   * Gives a return count using int of the size of the deck of cards that have been dealt.
-   * @return
+   * Returns the number of {@link Card} instances that have been dealt since the last shuffle (or
+   * since instance initialization).
    */
   public int dealt() {
     return dealt.size();
@@ -77,10 +97,15 @@ public class Deck {
   }
 
   public void sort(boolean gather) {
-    if(gather) {
+    if (gather) {
       gather();
     }
-    cards.sort( Comparator.comparing( Card::getSuit ).thenComparing( Card::getRank )); //Comparison extraction function.
+    cards.sort(this);
+  }
+
+  @Override
+  public int compare(Card card1, Card card2) {
+    return Comparator.comparing(Card::getSuit).thenComparing(Card::getRank).compare(card1, card2);
   }
 
 }
